@@ -137,7 +137,8 @@ jobs:
           #aria2c -s16 -x16 -k1M https://github.com/cctv18/android_gki_kernel_common/archive/refs/heads/android16-6.12-2025-06.zip -o common.zip && 
           aria2c -s16 -x16 -k1M https://github.com/aosp-mirror/kernel_common/archive/refs/heads/android16-6.12.zip -o common.zip && 
           unzip -q common.zip && 
-          mv "android_gki_kernel_common-android16-6.12-2025-06" common &&
+          #mv "android_gki_kernel_common-android16-6.12-2025-06" common &&
+          mv "kernel_common-android16android16-6.12" common &&
           rm -rf common.zip &
           
           echo "正在克隆llvm-clang19工具链..." &&

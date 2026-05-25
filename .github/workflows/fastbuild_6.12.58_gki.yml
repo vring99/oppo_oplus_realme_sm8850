@@ -693,6 +693,8 @@ jobs:
           # 1. 重映射物理路径 (由于6.12内核引入了Rust代码，计算内核符号版本的工具变成了gendwarfksyms，而gendwarfksyms无法正确预处理绝对路径，故我们需要手动把绝对路径重映射为相对路径，否则内核符号校验值会大面积出错)
           COMMON_REAL_PATH=$(pwd -P)
           ROOT_REAL_PATH=$(dirname "$COMMON_REAL_PATH")
+          KCFLAGS+=" -Wno-unused-command-line-argument"
+          KCFLAGS+=" -Wno-error=unused-command-line-argument"
           KCFLAGS+=" -fdebug-prefix-map=$ROOT_REAL_PATH=."
           KCFLAGS+=" -fmacro-prefix-map=$ROOT_REAL_PATH=."
           KCFLAGS+=" -ffile-prefix-map=$ROOT_REAL_PATH=."
@@ -719,7 +721,7 @@ jobs:
           export LD=ld.lld HOSTLD=ld.lld AR=llvm-ar NM=llvm-nm AS=clang READELF=llvm-readelf
           export OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump OBJSIZE=llvm-size STRIP=llvm-strip
           # 5. 编译前运行官方环境配置脚本
-          wget https://raw.githubusercontent.com/cctv18/android_gki_kernel_common/refs/heads/android16-6.12-2025-06/_setup_env.sh -o ./_setup_env.sh
+          wget https://raw.githubusercontent.com/cctv18/android_gki_kernel_common/refs/heads/android16-6.12-2025-06/_setup_env.sh -O ./_setup_env.sh
           source "./_setup_env.sh" 2>/dev/null || true
           
           #在构建内核的同时清除不必要的.NET, Android NDK, Haskell, CodeQL运行库，清理空间且不阻塞后续步骤运行
